@@ -117,6 +117,28 @@ and/or the working diff). Fix Critical/Important findings, re-run the gates, the
 lightweight check (accuracy, links, build) instead of a heavy review. Mixed → review the code
 part. Pushing still requires the user's explicit command.
 
+## Push targets & environments
+
+Projects use up to three environments — **dev**, **stg**, **production** — but **branch names
+vary**, so don't assume. Confirm the env → branch mapping with the user
+(`{ dev: <branch>, stg: <branch>, prod: <branch> }`; some may be absent) and persist it in
+`devkit.config.json` / the project's context file; reuse it, re-asking only if unknown.
+
+On **every push** (after the code review, on the user's explicit go-ahead):
+- Ask **which environment** via a radio prompt listing the mapped env branches **plus the
+  current branch**. If the current branch is NOT one of the mapped env branches, **default to
+  pushing the current branch**. Push only to the chosen target.
+- Maintain a per-env **URL** (localhost or a live domain) for verification; if the target env's
+  URL is unknown, **ask** it. After deploy, **verify against the chosen env's URL** — not always
+  production.
+
+Suggested `devkit.config.json` shape:
+```json
+{ "envs": { "dev": { "branch": "develop", "url": "http://localhost:3000" },
+            "stg": { "branch": "staging", "url": "https://stg.example.com" },
+            "prod": { "branch": "main", "url": "https://example.com" } } }
+```
+
 ## Standing guardrails
 
 - **Confirm before push** — never commit-to-remote without an explicit "yes"; the same goes
