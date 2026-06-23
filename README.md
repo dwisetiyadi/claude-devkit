@@ -4,6 +4,9 @@ A reusable, exportable Claude Code plugin that carries a **tech-agnostic develop
 workflow** plus a project scaffolder. Install it once; get the same disciplined process
 (and optional per-stack setup) in any project.
 
+> 📌 **Flow diagram — coming soon.** A visual end-to-end illustration of the workflow will be
+> embedded here to complement the text (tracked in [`TODO.md`](TODO.md)).
+
 ## What's inside
 
 - **Skill `disciplined-delivery`** (always-on, tech-agnostic) — the core process:
