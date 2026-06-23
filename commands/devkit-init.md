@@ -52,8 +52,10 @@ writing anything (this is the approval gate). If the user edits the selection, h
   the mapping the user gave — omit envs that don't exist. The push flow reads `envs` to ask the
   target and to verify against the right URL.)
 - For **web / full-stack** presets, copy `${CLAUDE_PLUGIN_ROOT}/templates/configs/playwright.config.ts`
-  (browser-fallback E2E) and add a `test:e2e` script; for a non-JS backend serving a frontend,
-  set `E2E_WEBSERVER` + `PORT` to that app's server (see its preset descriptor). For
+  (browser-fallback E2E), add a `test:e2e` script, and **install `@playwright/test` into the
+  project's dev dependencies** (`npm i -D @playwright/test` / `bun add -d @playwright/test`) — it
+  is a real project dependency, not a devkit one. For a non-JS backend serving a frontend, set
+  `E2E_WEBSERVER` + `PORT` to that app's server (Python: prefer `pytest-playwright`). For
   **content-driven (Astro/MDX)** presets, also copy the `content-invariants.test.ts` skeleton.
 - For **DB-backed data-invariant tests** (**any** preset whose app uses a database — the non-JS
   ones AND JS/TS apps via Prisma/Drizzle/Kysely/pg; data-invariants are not just for MDX),
@@ -88,3 +90,6 @@ commit or push — leave that to the user per the standing guardrails.
   process that applies regardless of preset.
 - If a stack you need isn't listed, pick the closest preset and adapt its gate commands in
   `devkit.config.json`.
+- **Recommended companion plugins** (optional — devkit works without them): **superpowers**
+  (workflow skills) and **impeccable** (UI/design). Claude Code has no plugin-dependency field,
+  so install these separately (`/plugin install <name>@<marketplace>`).

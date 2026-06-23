@@ -147,6 +147,16 @@ Suggested `devkit.config.json` shape:
 - **Verify locally first** — visual/functional checks on the local build/preview before push.
 - **Secrets never in the repo** — only in env/secret stores; keep templates committed, values out.
 
+## Requirements & companions
+
+This skill is **self-contained** — no other plugin is required to use it (it bundles a
+`code-reviewer` agent and describes every stage itself). Optional **companion plugins** enhance
+it: **superpowers** (brainstorming / writing-plans / subagent-driven-development / TDD /
+requesting-code-review / worktrees) and **impeccable** (UI/design). Per-project test tools
+(Playwright, pytest, the language toolchains) are the target project's own dev dependencies —
+`/devkit-init` wires them in. (Claude Code has no manifest dependency field, so these are
+documented here rather than auto-installed.)
+
 ## Project memory
 
 If the platform supports per-project memory, record durable preferences/decisions there (who

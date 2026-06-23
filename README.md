@@ -56,6 +56,26 @@ Then in any project:
 
 The `disciplined-delivery` skill activates automatically when you implement a feature/change.
 
+## Requirements & recommended companions
+
+Claude Code plugins have no manifest-level dependency field, so devkit can't auto-install other
+plugins. What it actually needs:
+
+**Per-project tools** — installed into the *target project* by `/devkit-init`, not by devkit:
+- Web E2E → Node + **`@playwright/test`** (or `pytest-playwright` for Python); `/devkit-init`
+  adds it to the project's dev dependencies for web presets.
+- Each stack's native toolchain for the gates (`go`, `cargo`, `mix`, `bundle`, `pytest`,
+  `vitest`, …) — the project's own dev tooling.
+
+**Recommended companion plugins** — optional; **devkit works without them**:
+- **superpowers** — deepens the workflow (brainstorming, writing-plans,
+  subagent-driven-development, test-driven-development, requesting-code-review,
+  using-git-worktrees). devkit is self-contained — it bundles its own `code-reviewer` agent and
+  describes every stage itself; superpowers' `requesting-code-review` is only an alternative.
+- **impeccable** — for UI/visual/design work.
+
+Install companions the usual way (`/plugin install <name>@<marketplace>`); none is required.
+
 ## Structure
 
 ```text
