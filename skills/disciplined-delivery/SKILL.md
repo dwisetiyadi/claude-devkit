@@ -55,10 +55,13 @@ approval still required before any push.
 ## TDD (for code with logic)
 
 Write the failing test first, run it to confirm it fails, write the minimal code to pass, then
-refactor. Put tests next to the code. **Data is testable too**: if the project encodes data
-(e.g. content frontmatter, config), assert its invariants in tests (unique keys/slugs,
-required fields, referenced asset paths exist, cross-locale pairing). Only literal prose and
-visual quality are left to build + a visual check.
+refactor. Put tests next to the code. **Data is testable too**: if the project encodes data,
+assert its invariants in tests (unique keys/slugs, required fields, referential integrity,
+referenced asset paths exist, cross-locale pairing). This applies to **file-based data** (e.g.
+content frontmatter, config) AND to **DB-backed data in full-stack apps of any language** — run
+the same invariant checks in the project's native test framework against a **test database**,
+with the connection read from an env var (kept in local env / secret store, never committed).
+Only literal prose and visual quality are left to build + a visual check.
 
 ## Gates (run before every commit)
 

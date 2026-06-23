@@ -38,9 +38,20 @@ writing anything (this is the approval gate). If the user edits the selection, h
   { "preset": "<preset>", "gates": { "typecheck": "...", "lint": "...", "test": "...", "build": "..." } }
   ```
   (copy the commands from the preset descriptor; omit gates a stack doesn't have.)
-- For **web** presets, copy `${CLAUDE_PLUGIN_ROOT}/templates/configs/playwright.config.ts`
-  (browser-fallback E2E) into the project and add a `test:e2e` script; for **content-driven**
-  presets (Astro), also copy the `content-invariants.test.ts` skeleton next to the content.
+- For **web / full-stack** presets, copy `${CLAUDE_PLUGIN_ROOT}/templates/configs/playwright.config.ts`
+  (browser-fallback E2E) and add a `test:e2e` script; for a non-JS backend serving a frontend,
+  set `E2E_WEBSERVER` + `PORT` to that app's server (see its preset descriptor). For
+  **content-driven (Astro/MDX)** presets, also copy the `content-invariants.test.ts` skeleton.
+- For **DB-backed data-invariant tests** (the non-JS presets — python, golang, ruby-on-rails,
+  elixir, rust — or any app with a database), **ASK the user** before scaffolding:
+  1. **Which data source / DB?** (e.g. PostgreSQL, MySQL, SQLite, …)
+  2. **Which env var holds the connection?** (e.g. `DATABASE_URL`) — it must live in the local
+     env / secret store and **never be committed**; confirm it's gitignored.
+  3. **Which invariants matter?** (unique keys/slugs, required/non-null columns, referential
+     integrity, i18n pairing, referenced-asset existence, …)
+  Then scaffold a starter data-invariant test in the preset's **native** framework against a
+  **test database** (see the preset descriptor for the file name + tooling). Never hardcode the
+  connection — read it from the env var.
 - Copy `${CLAUDE_PLUGIN_ROOT}/templates/configs/security-review.md` into the project's `docs/`.
 - Offer the **hook templates** (`${CLAUDE_PLUGIN_ROOT}/templates/hooks/`): a SessionStart hook
   that loads the project's context file, and an optional Stop hook to save session context.

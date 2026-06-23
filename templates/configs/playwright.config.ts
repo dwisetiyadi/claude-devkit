@@ -42,7 +42,17 @@ export default defineConfig({
     },
   ],
   webServer: {
-    // TODO: set to your project's build+serve, e.g. 'npm run build && npm run preview'
+    // Set E2E_WEBSERVER to your app's run command, or edit the default below. Works for any
+    // backend — Playwright drives the browser over HTTP regardless of language:
+    //   Node/Astro : 'npm run build && npm run preview'   (PORT 4321)
+    //   Next       : 'npm run build && npm run start'      (PORT 3000)
+    //   Rails      : 'bin/rails server -e test'            (PORT 3000)
+    //   Phoenix    : 'mix phx.server'                       (PORT 4000)
+    //   Django/FastAPI : 'python manage.py runserver' / 'uvicorn app:app'  (PORT 8000)
+    //   Go         : 'go run ./...'                         (PORT 8080)
+    //   Rust       : 'cargo run'                            (PORT 8080)
+    // Non-JS projects still need Node + @playwright/test as a dev tool here (or use a native
+    // binding instead — e.g. pytest-playwright for Python, Capybara for Rails, Wallaby for Elixir).
     command: process.env.E2E_WEBSERVER ?? 'npm run build && npm run preview',
     url: baseURL,
     reuseExistingServer: false,

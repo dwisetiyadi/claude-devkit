@@ -27,6 +27,22 @@ A Python project (library, CLI, or web API e.g. FastAPI/Django).
 `__pycache__/`, `.venv/`, `*.pyc`, `.pytest_cache/`, `.mypy_cache/`, `.ruff_cache/`,
 `dist/`, `.env*` (keep `.env.example`).
 
+## Fullstack frontend E2E
+
+If this project serves a frontend, validate it by reusing
+`templates/configs/playwright.config.ts`: set `E2E_WEBSERVER` to your server command
+(`uvicorn app:app` or `python manage.py runserver`) and `PORT=8000`. Native option:
+**`pytest-playwright`** (no Node needed; browser preference Chrome → Brave → … → bundled applies).
+
+## Data-invariant tests
+
+Treat persisted data as testable. With **pytest** against a **test database**, assert: unique
+keys/slugs, required (non-null) columns, referential integrity (FKs), i18n pairing (if any),
+referenced asset/file paths exist. Tooling: SQLAlchemy/psycopg or the Django ORM.
+`/devkit-init` asks the project-specific bits — **which DB**, the **env var holding its
+connection** (kept in local env / secret store, never committed, e.g. `DATABASE_URL`), and
+**which invariants** matter — then scaffolds a starter `tests/test_data_invariants.py`.
+
 ## Notes
 
 TDD with `pytest` (RED → GREEN → REFACTOR). Pin Python version (`.python-version`). Keep

@@ -28,6 +28,21 @@ A Rust project (service via axum/actix, CLI, or library).
 
 `/target`, `*.rs.bk`, `.env*` (keep `.env.example`), `Cargo.lock` _(commit for bins, ignore for libs)_.
 
+## Fullstack frontend E2E
+
+If this project serves a frontend (e.g. axum/actix templates or an embedded SPA), validate it by
+reusing `templates/configs/playwright.config.ts`: set `E2E_WEBSERVER='cargo run'` and `PORT=8080`
+(needs Node + `@playwright/test`; Rust has no official browser binding).
+
+## Data-invariant tests
+
+Treat persisted data as testable. With **`cargo test`** against a **test database**, assert:
+unique keys/slugs, non-null/required columns, referential integrity (FKs), i18n pairing (if any),
+referenced asset paths exist. Tooling: `sqlx` (compile-time-checked queries) or `diesel`.
+`/devkit-init` asks the project-specific bits — **which DB**, the **env var holding its
+connection** (kept in local env / secret store, never committed, e.g. `DATABASE_URL`), and
+**which invariants** matter — then scaffolds a starter `tests/data_invariants.rs`.
+
 ## Notes
 
 TDD with `cargo test` (unit `#[cfg(test)]` + `tests/` integration). Clippy `-D warnings` +
