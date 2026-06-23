@@ -1,0 +1,126 @@
+---
+name: disciplined-delivery
+description: Use when implementing ANY feature, fix, content, or change in a project. Composes the right workflow for the task (with an explicit approval gate), then enforces TDD, QA scaled to risk, and a code review before every push. Tech-agnostic — gate commands resolve from the project's own config/preset.
+---
+
+# Disciplined Delivery
+
+A workflow discipline that works on any stack. The flow is a **toolbox, not a fixed
+checklist**: analyze the task, propose a composed flow, get approval, then execute only the
+approved steps. Keep the project's quality gates green; never push without explicit approval.
+
+## The toolbox of steps
+
+```
+brainstorm → plan → isolate(worktree) → TDD → gates → QA(by risk) → code review → push → verify
+```
+
+- **brainstorm** — for a new/ambiguous feature: clarify purpose, constraints, success criteria.
+- **plan** — for multi-step work: write a short plan (files, interfaces, tasks).
+- **isolate** — a git worktree/branch when changes are risky or run in parallel.
+- **TDD** — RED → GREEN → REFACTOR for any code with testable logic.
+- **gates** — the project's four green gates before commit (see *Gates*).
+- **QA** — functional / penetration / load, **scaled to risk** (see *QA by risk*).
+- **code review** — before every push (see *Code review before push*).
+- **push** — only on the user's explicit command.
+- **verify** — after deploy, verify the live/running result for page/behavior-facing changes.
+
+## Approval gate — propose the flow BEFORE executing (required)
+
+Use this exact two-step mechanism at the start of a task:
+
+1. **Radio (single-select) question** — state the recommended composed flow (ordered steps) in
+   the question text; offer exactly **"Ya, jalankan"** and **"Tidak, saya pilih sendiri"**
+   (or the project's language equivalent: "Yes, run it" / "No, I'll choose").
+2. **Yes** → run the recommended flow as-is.
+3. **No** → a second **multi-select** question listing **all** candidate steps **in order**,
+   each recommended step tagged **"(Recommended)"** so the user edits/modifies your
+   recommendation by ticking/unticking. Run only the ticked steps.
+
+This gate decides *which steps run*. It is separate from — and in addition to — the explicit
+approval still required before any push.
+
+## Compose by task type
+
+- **Logic / library / API feature**: brainstorm (if ambiguous) → plan (if multi-step) →
+  **TDD** → gates → **E2E if it changes interactive behavior** → code review → push → verify.
+- **Content / copy** (articles, docs-as-data): angle + intent/keyword → write (all locales) →
+  **data-invariant tests** + build + **visual check** → **editorial review** (accuracy, voice,
+  localization quality, internal links, meta) — this replaces code review → push → verify.
+- **UI / visual**: design/shape → build → **screenshot/visual check** → E2E if interactive →
+  code review → push → verify.
+- **Docs-only** (README, notes): write → **lightweight check** (links/paths, build) → push.
+  No TDD, no heavy code review.
+
+## TDD (for code with logic)
+
+Write the failing test first, run it to confirm it fails, write the minimal code to pass, then
+refactor. Put tests next to the code. **Data is testable too**: if the project encodes data
+(e.g. content frontmatter, config), assert its invariants in tests (unique keys/slugs,
+required fields, referenced asset paths exist, cross-locale pairing). Only literal prose and
+visual quality are left to build + a visual check.
+
+## Gates (run before every commit)
+
+The project defines four gates; resolve the exact commands from `devkit.config.json` (written
+by `/devkit-init`) or the project's package scripts. Conventionally:
+
+| Gate       | Typical command (resolve per stack)        |
+| ---------- | ------------------------------------------ |
+| typecheck  | `npm run typecheck` / `tsc` / `mypy` / `go vet` |
+| lint       | `npm run lint` / `ruff` / `golangci-lint`  |
+| test       | `npm test` / `pytest` / `go test ./...`    |
+| build      | `npm run build` / `go build` / (n/a)       |
+
+All four must be green before committing. Re-run them after any review fix.
+
+## QA by risk
+
+Scale QA to the task and the project's surface — don't run every type on every feature. This
+applies to **both frontend and backend/API** projects; pick the functional form that fits.
+
+- **Functional** — automate the critical flows in the project's OWN language/tooling:
+  - **Frontend / web UI** → browser E2E (navigation, auth, forms, rendering). Use Playwright;
+    **browser preference**: first installed of **real Chrome → Brave → another Chrome-derived
+    browser (Edge/Vivaldi/Opera/Chromium) → the runner's bundled Chromium** (resolve an
+    executable path; allow an env override). Playwright has runners for **Node/TS, Python
+    (`pytest-playwright`), Java, .NET** — use the one matching your stack.
+  - **Backend / API service** → integration tests against the running app (request → response):
+    status codes, validation, authz, error shapes. Node `supertest`/`fetch`, Python
+    `TestClient`/`httpx`, Go `net/http/httptest`, Rails request specs, Elixir `Phoenix.ConnTest`,
+    Rust `reqwest`/`actix-test`. No browser needed.
+- **Penetration** — NOT per-feature. Periodic **security review** (input validation, authn/z,
+  secrets, injection, headers/CSP, dependency audit). **Higher value for API/backends** — make
+  it a regular pass there. Use `templates/configs/security-review.md` (language-agnostic).
+- **Load** — only where there's a real dynamic bottleneck. **More relevant for API/backends**
+  (hot endpoints) than for CDN-served static frontends (mostly N/A). Use a stack-appropriate
+  tool (`autocannon`, `k6`, `go test -bench`, `wrk`) when warranted.
+
+> The TypeScript templates in `templates/configs/` (`playwright.config.ts`,
+> `content-invariants.test.ts`) are **Node/web-stack helpers** — ignore them for Python, Go,
+> Ruby, Elixir, Rust projects and use that language's native test/E2E tooling instead. The
+> `security-review.md` checklist is language-agnostic and applies everywhere.
+
+## Code review before push
+
+Before **every push**, run a code review (e.g. the bundled `code-reviewer` agent, or
+`superpowers:requesting-code-review`) over the diff about to ship (`git diff <remote>..HEAD`
+and/or the working diff). Fix Critical/Important findings, re-run the gates, then push.
+
+**Scope:** review **code** (logic/tests/config). For **docs/content-only** diffs do a
+lightweight check (accuracy, links, build) instead of a heavy review. Mixed → review the code
+part. Pushing still requires the user's explicit command.
+
+## Standing guardrails
+
+- **Confirm before push** — never commit-to-remote without an explicit "yes"; the same goes
+  for anything outward-facing (publishing, deploying, sending).
+- **No frequent micro-commits** — iterate uncommitted; commit once the work is right.
+- **Verify locally first** — visual/functional checks on the local build/preview before push.
+- **Secrets never in the repo** — only in env/secret stores; keep templates committed, values out.
+
+## Project memory
+
+If the platform supports per-project memory, record durable preferences/decisions there (who
+the user is, confirmed workflow choices, non-obvious gotchas) so they survive across sessions.
+This skill carries the *defaults*; project memory carries the *specifics*.

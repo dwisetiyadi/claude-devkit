@@ -1,0 +1,13 @@
+{
+  "name": "dwisetiyadi-devkit",
+  "owner": {
+    "name": "Dwi Setiyadi"
+  },
+  "plugins": [
+    {
+      "name": "devkit",
+      "source": "./",
+      "description": "Disciplined delivery toolkit + project scaffolder: a tech-agnostic workflow skill (approval-gated, TDD, QA-by-risk, code review before push), a /devkit-init command with stack presets, a code-reviewer agent, and publish-ready setup."
+    }
+  ]
+}

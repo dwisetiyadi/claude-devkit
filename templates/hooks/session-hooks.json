@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "printf '## Project context (auto-loaded at session start)\\n\\n'; cat .session/CONTEXT.md 2>/dev/null || cat PROJECT.md 2>/dev/null || true"
+          }
+        ]
+      }
+    ]
+  }
+}
