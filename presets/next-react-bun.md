@@ -26,6 +26,16 @@ Next.js + React, on Bun.
 `node_modules`, `.next/`, `out/`, `.env*` (keep `.env.example`),
 `test-results/`, `playwright-report/`, `.last-run.json`.
 
+## Data-invariant tests (DB-backed)
+
+Next apps are usually DB-backed — assert DB invariants with **Vitest** against a **test
+database**: unique keys/slugs, required (non-null) columns, referential integrity, i18n
+pairing (if any), referenced-asset existence. Tooling: Prisma / Drizzle / Kysely / `pg` /
+Bun's `bun:sqlite`. (If you also author MDX content, the `content-invariants.test.ts` pattern
+applies to that.) `/devkit-init` asks the project-specific bits (which DB, the env var holding
+the connection — local/secret, never committed, e.g. `DATABASE_URL` — and which invariants),
+then scaffolds a starter test.
+
 ## Notes
 
 Confirm the Next version + deploy target run cleanly on Bun; some Next features still assume

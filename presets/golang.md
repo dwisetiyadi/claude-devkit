@@ -5,6 +5,17 @@ A Go project (service, CLI, or library).
 - **Package manager:** go modules
 - **Install:** `go mod download`
 
+## Native vs devkit (complement, not replacement)
+
+Go's toolchain already covers most gates natively — devkit does NOT replace it; it maps the
+gates to your native commands and adds the cross-language process on top.
+
+- **Native (use as-is):** `go test`, `go vet`, `gofmt`, `go build` — all built into the `go`
+  toolchain. (`golangci-lint`, `govulncheck` are standard add-ons.)
+- **devkit adds:** the disciplined-delivery workflow (compose-per-task + approval gate +
+  QA-by-risk + code-review-before-push), the **data-invariant** discipline, and the
+  language-agnostic security-review checklist.
+
 ## Gates
 
 | Gate      | Command                              |

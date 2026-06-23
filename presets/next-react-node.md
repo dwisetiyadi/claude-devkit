@@ -27,6 +27,16 @@ Next.js (App Router) + React, on Node.
 `node_modules`, `.next/`, `out/`, `.env*` (keep `.env.example`), `coverage/`,
 `test-results/`, `playwright-report/`, `.last-run.json`.
 
+## Data-invariant tests (DB-backed)
+
+Next apps are usually DB-backed — assert DB invariants with **Vitest** against a **test
+database**: unique keys/slugs, required (non-null) columns, referential integrity, i18n
+pairing (if any), referenced-asset existence. Tooling: Prisma / Drizzle / Kysely / `pg`.
+(If you also author MDX content, the `content-invariants.test.ts` pattern applies to that.)
+`/devkit-init` asks the project-specific bits (which DB, the env var holding the connection —
+local/secret, never committed, e.g. `DATABASE_URL` — and which invariants), then scaffolds a
+starter test.
+
 ## Notes
 
 API routes / Server Actions are real server code — TDD their logic and review them for the

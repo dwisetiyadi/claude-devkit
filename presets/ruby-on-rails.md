@@ -5,6 +5,17 @@ A Ruby on Rails app (full-stack or API-only).
 - **Package manager:** Bundler (+ Yarn/importmap for assets if full-stack)
 - **Install:** `bundle install`
 
+## Native vs devkit (complement, not replacement)
+
+Rails ships a lot out of the box — devkit does NOT replace it; it maps the gates to Rails'
+native tooling and adds the cross-language process on top.
+
+- **Native (use as-is):** Minitest (or RSpec), **Capybara system tests**, generators,
+  migrations, strong params + model validations, Brakeman, encrypted credentials.
+- **devkit adds:** the disciplined-delivery workflow (compose-per-task + approval gate +
+  QA-by-risk + code-review-before-push), the **data-invariant** discipline (integrity checks
+  beyond model validations), and the language-agnostic security-review checklist.
+
 ## Gates
 
 | Gate      | Command                                              |

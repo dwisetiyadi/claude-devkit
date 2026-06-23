@@ -27,6 +27,16 @@ Astro (static/SSR) with React islands, on Node.
 `node_modules`, `dist`, `.astro/`, `.env*` (keep `.env.example`), `coverage/`,
 `test-results/`, `playwright-report/`, `.last-run.json`.
 
+## Data-invariant tests (DB-backed)
+
+If this app uses a **database** (not just MDX), assert DB invariants too — with **Vitest**
+against a **test database**: unique keys/slugs, required (non-null) columns, referential
+integrity, i18n pairing (if any), referenced-asset existence. Tooling: Prisma / Drizzle /
+Kysely / `pg`. **MDX content → `content-invariants.test.ts`; DB data → a DB data-invariant
+test** — use either or both. `/devkit-init` asks the project-specific bits (which DB, the env
+var holding the connection — local/secret, never committed, e.g. `DATABASE_URL` — and which
+invariants), then scaffolds a starter test.
+
 ## Notes
 
 Use `@astrojs/react`. Build-critical deps (`@tailwindcss/vite`, `sass`, etc.) belong in

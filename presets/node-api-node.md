@@ -30,6 +30,14 @@ An HTTP API service on the **Node** runtime — no frontend.
 
 `node_modules`, `dist`, `.env*` (keep `.env.example`), `coverage/`.
 
+## Data-invariant tests (DB-backed)
+
+If the API is backed by a **database**, assert DB invariants with **Vitest** against a **test
+database**: unique keys, required (non-null) columns, referential integrity, referenced-asset
+existence. Tooling: Prisma / Drizzle / Kysely / `pg`. `/devkit-init` asks the project-specific
+bits (which DB, the env var holding the connection — local/secret, never committed, e.g.
+`DATABASE_URL` — and which invariants), then scaffolds a starter test.
+
 ## Notes
 
 Browser E2E templates do not apply (no UI). TDD the handlers/services; validate every input at

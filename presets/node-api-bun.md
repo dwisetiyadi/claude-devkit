@@ -28,6 +28,15 @@ An HTTP API service on the **Bun** runtime — no frontend.
 
 `node_modules`, `dist`, `.env*` (keep `.env.example`), `coverage/`.
 
+## Data-invariant tests (DB-backed)
+
+If the API is backed by a **database**, assert DB invariants with **`bun test`** (or Vitest)
+against a **test database**: unique keys, required (non-null) columns, referential integrity,
+referenced-asset existence. Tooling: Prisma / Drizzle / Kysely / `pg` / Bun's `bun:sqlite`.
+`/devkit-init` asks the project-specific bits (which DB, the env var holding the connection —
+local/secret, never committed, e.g. `DATABASE_URL` — and which invariants), then scaffolds a
+starter test.
+
 ## Notes
 
 Pin the Bun version for CI parity. Elysia's end-to-end types make TDD pleasant — type the

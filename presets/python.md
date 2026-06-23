@@ -5,6 +5,17 @@ A Python project (library, CLI, or web API e.g. FastAPI/Django).
 - **Package manager:** uv / poetry / pip
 - **Install:** `uv sync` _(or `poetry install` / `pip install -e ".[dev]"`)_
 
+## Native vs devkit (complement, not replacement)
+
+devkit does NOT replace your test/lint tooling — it maps the gates to the commands you already
+run and adds the cross-language process on top.
+
+- **Native / ecosystem-standard (use as-is):** `unittest` (stdlib); `pytest`, `ruff`, `mypy`,
+  `pip-audit` are the de-facto standards you invoke directly.
+- **devkit adds:** the disciplined-delivery workflow (compose-per-task + approval gate +
+  QA-by-risk + code-review-before-push), the **data-invariant** discipline, and the
+  language-agnostic security-review checklist.
+
 ## Gates
 
 | Gate      | Command                          |

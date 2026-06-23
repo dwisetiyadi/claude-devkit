@@ -42,8 +42,10 @@ writing anything (this is the approval gate). If the user edits the selection, h
   (browser-fallback E2E) and add a `test:e2e` script; for a non-JS backend serving a frontend,
   set `E2E_WEBSERVER` + `PORT` to that app's server (see its preset descriptor). For
   **content-driven (Astro/MDX)** presets, also copy the `content-invariants.test.ts` skeleton.
-- For **DB-backed data-invariant tests** (the non-JS presets — python, golang, ruby-on-rails,
-  elixir, rust — or any app with a database), **ASK the user** before scaffolding:
+- For **DB-backed data-invariant tests** (**any** preset whose app uses a database — the non-JS
+  ones AND JS/TS apps via Prisma/Drizzle/Kysely/pg; data-invariants are not just for MDX),
+  **ASK the user** before scaffolding. Rule of thumb: **MDX content → `content-invariants`;
+  database → a DB data-invariant test**; an app can have both. Ask:
   1. **Which data source / DB?** (e.g. PostgreSQL, MySQL, SQLite, …)
   2. **Which env var holds the connection?** (e.g. `DATABASE_URL`) — it must live in the local
      env / secret store and **never be committed**; confirm it's gitignored.

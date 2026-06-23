@@ -5,6 +5,17 @@ An Elixir project (Phoenix web/API, or a plain mix app).
 - **Package manager:** mix (Hex)
 - **Install:** `mix deps.get`
 
+## Native vs devkit (complement, not replacement)
+
+Mix/Phoenix cover much of this natively — devkit does NOT replace them; it maps the gates to
+your native commands and adds the cross-language process on top.
+
+- **Native (use as-is):** ExUnit, `mix format`, `mix test`, `mix compile --warnings-as-errors`;
+  Phoenix generators + `LiveViewTest`. (Credo, Dialyxir, Sobelow, mix_audit are add-ons.)
+- **devkit adds:** the disciplined-delivery workflow (compose-per-task + approval gate +
+  QA-by-risk + code-review-before-push), the **data-invariant** discipline (integrity beyond
+  changesets), and the language-agnostic security-review checklist.
+
 ## Gates
 
 | Gate      | Command                                          |

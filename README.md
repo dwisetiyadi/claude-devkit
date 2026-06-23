@@ -30,6 +30,14 @@ gitignore). The TypeScript config templates are Node/web helpers — non-JS stac
 native tooling (the security-review checklist is language-agnostic). For an unlisted stack,
 pick the closest preset and adjust `devkit.config.json`.
 
+**It complements your toolchain, it doesn't replace it.** devkit ships no test runner/linter —
+it maps the gates to your stack's NATIVE commands (`go test`, `cargo test`, `mix test`,
+`pytest`, `rails test`, `vitest`, …) and adds what no language toolchain provides: the
+workflow discipline + the data/content-invariant patterns. Each non-JS preset spells out
+*Native vs devkit*. **Data-invariants are adaptive** — file-based (MDX → `content-invariants`)
+or DB-backed (any stack → assert DB invariants in the native test framework against a test DB,
+connection from a local env var); `/devkit-init` asks the specifics.
+
 ## Install
 
 ```text

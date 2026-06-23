@@ -5,6 +5,18 @@ A Rust project (service via axum/actix, CLI, or library).
 - **Package manager:** Cargo
 - **Install:** `cargo fetch`
 
+## Native vs devkit (complement, not replacement)
+
+Cargo is very complete — devkit does NOT replace it; it maps the gates to Cargo's native
+commands and adds the cross-language process on top.
+
+- **Native (use as-is):** `cargo test`, `cargo fmt`, `cargo clippy`, `cargo build`,
+  `cargo bench` — built into Cargo; the compiler/type system is your strongest gate.
+  (`cargo audit`, `cargo deny` are standard add-ons.)
+- **devkit adds:** the disciplined-delivery workflow (compose-per-task + approval gate +
+  QA-by-risk + code-review-before-push), the **data-invariant** discipline, and the
+  language-agnostic security-review checklist.
+
 ## Gates
 
 | Gate      | Command                                   |

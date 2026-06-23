@@ -65,8 +65,11 @@ Only literal prose and visual quality are left to build + a visual check.
 
 ## Gates (run before every commit)
 
-The project defines four gates; resolve the exact commands from `devkit.config.json` (written
-by `/devkit-init`) or the project's package scripts. Conventionally:
+devkit does **not** ship a test runner or linter — it **maps** four gates to your stack's
+**native** commands (the preset descriptors list them) and adds the workflow on top. So this
+**complements** each ecosystem's built-in tooling (e.g. `go test`/`cargo test`/`mix test`/
+`pytest`/`rails test`) rather than replacing it. Resolve the exact commands from
+`devkit.config.json` (written by `/devkit-init`) or the project's scripts. Conventionally:
 
 | Gate       | Typical command (resolve per stack)        |
 | ---------- | ------------------------------------------ |
