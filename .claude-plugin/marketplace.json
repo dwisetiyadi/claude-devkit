@@ -1,13 +1,17 @@
 {
   "name": "dwisetiyadi-devkit",
   "owner": {
-    "name": "Dwi Setiyadi"
+    "name": "Dwi Setiyadi",
+    "email": "dwi.setiyadi@gmail.com"
   },
   "plugins": [
     {
       "name": "devkit",
       "source": "./",
-      "description": "Disciplined delivery toolkit + project scaffolder: a tech-agnostic workflow skill (approval-gated, TDD, QA-by-risk, code review before push), a /devkit-init command with stack presets, a code-reviewer agent, and publish-ready setup."
+      "description": "Disciplined delivery toolkit + project scaffolder: a tech-agnostic workflow skill (approval-gated, TDD, QA-by-risk, code review before push), a /devkit-init command with stack presets, a code-reviewer agent, and publish-ready setup.",
+      "category": "development",
+      "homepage": "https://github.com/dwisetiyadi/claude-devkit",
+      "tags": ["workflow", "tdd", "qa", "code-review", "scaffolding", "presets"]
     }
   ]
 }

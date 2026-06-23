@@ -1,10 +1,14 @@
 {
   "name": "devkit",
   "description": "Disciplined delivery toolkit — a tech-agnostic dev workflow (compose-per-task with an approval gate, TDD, QA-by-risk, code review before push, content/editorial flow) plus a /devkit-init command that scaffolds a chosen tooling preset, an optional code-reviewer agent, and publish-ready marketplace setup.",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "author": {
-    "name": "Dwi Setiyadi"
+    "name": "Dwi Setiyadi",
+    "email": "dwi.setiyadi@gmail.com"
   },
+  "homepage": "https://github.com/dwisetiyadi/claude-devkit",
+  "repository": "https://github.com/dwisetiyadi/claude-devkit",
+  "keywords": ["workflow", "tdd", "qa", "code-review", "scaffolding", "presets"],
   "skills": "./skills/",
   "agents": [
     "./agents/code-reviewer.md"
