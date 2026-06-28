@@ -181,6 +181,11 @@ Suggested `devkit.config.json` shape:
 - **Model is the user's choice** — the workflow is model-agnostic; never hard-code or assume a
   model (don't force a heavy one). `/devkit-init` asks a preferred model and records it; the user
   can change it any time mid-session.
+- **Version + CHANGELOG per change** — assess EVERY change's magnitude (very-minor / minor / major)
+  and decide whether it warrants a version bump (semver: **patch** = fix/very-minor, **minor** =
+  non-breaking feature, **major** = breaking change; trivial/no-impact changes need none). When you
+  DO bump, **always add a `CHANGELOG.md` entry** (Keep a Changelog format) and tag the release
+  commit (`git tag -a vX.Y.Z`). Don't let shipped work drift ahead of the version.
 - **Secrets never in the repo** — only in env/secret stores; keep templates committed, values out.
 
 ## Requirements & companions
