@@ -167,8 +167,11 @@ Suggested `devkit.config.json` shape:
   supersedes it** (re-capture a surface only when its source changed: component / content-per-locale
   / style / data / build). **Persist captures to disk** (the record; the user can audit them);
   **re-capture in production only on the user's request**. One composite full-page shot beats many;
-  offload big diffs / audit output to a subagent that returns just the conclusion. Don't re-read a
-  file you just wrote — the tool layer tracks file state and an edit fails loudly on mismatch.
+  offload big diffs / audit output to a subagent that returns just the conclusion — a subagent saves
+  the MAIN-thread context (heavy reads stay in its context), NOT total tokens (those usually rise), so
+  it nets out ahead only for **BIG** offloads in a long session; parallel subagents save wall-clock
+  TIME, not tokens. Don't re-read a file you just wrote — the tool layer tracks file state and an
+  edit fails loudly on mismatch.
   **If the user says they see no change** (their eyes disagree with your belief it's done), treat it
   as a stale-knowledge signal — their report overrides your cached/structural assumption. Diagnose
   the likely cause (often a coverage gap: you checked one surface, they're on another), then **ask
