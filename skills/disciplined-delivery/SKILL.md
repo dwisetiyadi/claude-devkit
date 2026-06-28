@@ -169,6 +169,10 @@ Suggested `devkit.config.json` shape:
   **re-capture in production only on the user's request**. One composite full-page shot beats many;
   offload big diffs / audit output to a subagent that returns just the conclusion. Don't re-read a
   file you just wrote — the tool layer tracks file state and an edit fails loudly on mismatch.
+  **If the user says they see no change** (their eyes disagree with your belief it's done), treat it
+  as a stale-knowledge signal — their report overrides your cached/structural assumption. Diagnose
+  the likely cause (often a coverage gap: you checked one surface, they're on another), then **ask
+  the user's approval before re-capturing** (re-capture costs tokens), and refresh on yes.
 - **Scoring/audit tools are optional & reporting-only** — Lighthouse, accessibility / SEO / design
   audits, anything that emits a SCORE or grade, is NOT a gate and carries no obligation. Don't run
   it by default; **ask or just inform the user** so they run it occasionally. (Lighthouse, if the
