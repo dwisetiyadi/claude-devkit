@@ -78,7 +78,8 @@ devkit does **not** ship a test runner or linter — it **maps** four gates to y
 | test       | `npm test` / `pytest` / `go test ./...`    |
 | build      | `npm run build` / `go build` / (n/a)       |
 
-All four must be green before committing. Re-run them after any review fix.
+All four must be green before committing. After any fix for findings, re-run them **plus the QA
+that applies** — see *Full regression after any fix* under *Standing guardrails*.
 
 ## QA by risk
 
@@ -111,7 +112,7 @@ applies to **both frontend and backend/API** projects; pick the functional form 
 
 Before **every push**, run a code review (e.g. the bundled `code-reviewer` agent, or
 `superpowers:requesting-code-review`) over the diff about to ship (`git diff <remote>..HEAD`
-and/or the working diff). Fix Critical/Important findings, re-run the gates, then push.
+and/or the working diff). Fix Critical/Important findings, re-run the **full regression** (gates + applicable QA), then push.
 
 **Scope:** review **code** (logic/tests/config). For **docs/content-only** diffs do a
 lightweight check (accuracy, links, build) instead of a heavy review. Mixed → review the code
@@ -145,6 +146,14 @@ Suggested `devkit.config.json` shape:
   for anything outward-facing (publishing, deploying, sending).
 - **No frequent micro-commits** — iterate uncommitted; commit once the work is right.
 - **Verify locally first** — visual/functional checks on the local build/preview before push.
+- **Full regression after any fix** — after fixing findings from a code review, audit, QA, lint,
+  or a bug, re-run the WHOLE regression (the four gates AND the QA that applies — e.g. E2E), not
+  just the spot you changed. A fix can break something elsewhere; verifying only the fix misses
+  it — that is the entire point of regression. Treat "fix → full regression → report" as one
+  indivisible step; never declare green or propose a push until the complete suite re-runs clean.
+- **Complete work, all surfaces** — never ship half-work. Apply AND validate every change across
+  ALL surfaces it touches: every locale, light/dark, each breakpoint (desktop/tablet/mobile),
+  and every paired file/page. Automated invariants miss cross-surface drift — check each surface.
 - **Secrets never in the repo** — only in env/secret stores; keep templates committed, values out.
 
 ## Requirements & companions
