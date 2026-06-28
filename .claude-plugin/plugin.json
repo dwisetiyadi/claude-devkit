@@ -1,7 +1,7 @@
 {
   "name": "devkit",
   "description": "Disciplined delivery toolkit — a tech-agnostic dev workflow (compose-per-task with an approval gate, TDD, QA-by-risk, code review before push, content/editorial flow) plus a /devkit-init command that scaffolds a chosen tooling preset, an optional code-reviewer agent, and publish-ready marketplace setup.",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "author": {
     "name": "Dwi Setiyadi",
     "email": "dwi.setiyadi@gmail.com"

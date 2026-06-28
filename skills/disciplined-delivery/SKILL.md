@@ -158,11 +158,16 @@ Suggested `devkit.config.json` shape:
 - **Complete work, all surfaces** — never ship half-work. Apply AND validate every change across
   ALL surfaces it touches: every locale, light/dark, each breakpoint (desktop/tablet/mobile),
   and every paired file/page. Automated invariants miss cross-surface drift — check each surface.
-- **Token-frugal verification** — verification is the biggest token sink, so don't waste it. To
-  confirm "does X render / is the markup right," use a **structural/DOM check** (inspect the built
-  output, query the DOM), NOT a screenshot. Read a screenshot into context ONLY for genuine
-  **visual-quality** judgment; capture extras to disk without reading them; one composite full-page
-  shot beats many. Offload big diffs / audit output to a subagent that returns just the conclusion.
+- **Token-frugal verification** — the token sink is *reading* an image into context, not
+  capturing/storing it, so capture & persist freely. To confirm "does X render / is the markup
+  right," use a **structural/DOM check** (inspect the built output, query the DOM), not a
+  screenshot. When a visual-quality judgment IS needed, **capture the full surface matrix** the
+  change touches (every locale, light/dark, each viewport — coverage catches what caching can't),
+  **read each surface once and keep that knowledge**, and **re-read only when a new capture
+  supersedes it** (re-capture a surface only when its source changed: component / content-per-locale
+  / style / data / build). **Persist captures to disk** (the record; the user can audit them);
+  **re-capture in production only on the user's request**. One composite full-page shot beats many;
+  offload big diffs / audit output to a subagent that returns just the conclusion.
 - **Scoring/audit tools are optional & reporting-only** — Lighthouse, accessibility / SEO / design
   audits, anything that emits a SCORE or grade, is NOT a gate and carries no obligation. Don't run
   it by default; **ask or just inform the user** so they run it occasionally. (Lighthouse, if the
