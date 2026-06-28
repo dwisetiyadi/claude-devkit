@@ -151,9 +151,26 @@ Suggested `devkit.config.json` shape:
   just the spot you changed. A fix can break something elsewhere; verifying only the fix misses
   it — that is the entire point of regression. Treat "fix → full regression → report" as one
   indivisible step; never declare green or propose a push until the complete suite re-runs clean.
+  **Batched + risk-proportional (token-frugal):** fix ALL findings first, then run the regression
+  ONCE, scoped to the change's blast radius — cheap gates (typecheck/lint/unit/build) freely, the
+  expensive E2E once per fix-batch only if that surface was touched. Same discipline, no redundant
+  re-runs.
 - **Complete work, all surfaces** — never ship half-work. Apply AND validate every change across
   ALL surfaces it touches: every locale, light/dark, each breakpoint (desktop/tablet/mobile),
   and every paired file/page. Automated invariants miss cross-surface drift — check each surface.
+- **Token-frugal verification** — verification is the biggest token sink, so don't waste it. To
+  confirm "does X render / is the markup right," use a **structural/DOM check** (inspect the built
+  output, query the DOM), NOT a screenshot. Read a screenshot into context ONLY for genuine
+  **visual-quality** judgment; capture extras to disk without reading them; one composite full-page
+  shot beats many. Offload big diffs / audit output to a subagent that returns just the conclusion.
+- **Scoring/audit tools are optional & reporting-only** — Lighthouse, accessibility / SEO / design
+  audits, anything that emits a SCORE or grade, is NOT a gate and carries no obligation. Don't run
+  it by default; **ask or just inform the user** so they run it occasionally. (Lighthouse, if the
+  user wants it: once, last, only after the change is live — lab metrics are noisy; field/CrUX is
+  the real signal.)
+- **Model is the user's choice** — the workflow is model-agnostic; never hard-code or assume a
+  model (don't force a heavy one). `/devkit-init` asks a preferred model and records it; the user
+  can change it any time mid-session.
 - **Secrets never in the repo** — only in env/secret stores; keep templates committed, values out.
 
 ## Requirements & companions

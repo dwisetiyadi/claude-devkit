@@ -28,6 +28,10 @@ Ask the user (use `$ARGUMENTS` as the preset if provided):
 4. **Environments → branch + URL mapping.** Branch names vary, so ask for each env that exists:
    its **branch name** (dev e.g. `develop`, stg e.g. `staging`, prod e.g. `main`/`master`) and
    its **URL** (a localhost URL or a live domain). Some envs may be absent — skip those.
+5. **Preferred model** (single-select, optional) — which Claude model to default to for this
+   project's work/subagents (e.g. a faster model for routine work, a stronger one for hard tasks),
+   or **"no preference / I'll pick per task"**. Record it but **never force it** — it's a default,
+   and the user can change it any time mid-session.
 
 ## 2. Show the plan + get approval
 
@@ -40,6 +44,7 @@ writing anything (this is the approval gate). If the user edits the selection, h
   ```json
   {
     "preset": "<preset>",
+    "model": "<preferred model id, or null for no preference>",
     "gates": { "typecheck": "...", "lint": "...", "test": "...", "build": "..." },
     "envs": {
       "dev":  { "branch": "develop", "url": "http://localhost:3000" },

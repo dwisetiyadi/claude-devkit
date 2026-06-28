@@ -14,7 +14,9 @@ workflow** plus a project scaffolder. Install it once; get the same disciplined 
   (data invariants included), **QA scaled to risk** (functional E2E / periodic pen review /
   load only where warranted), **code review before every push**, a **content/editorial
   flow**, and the standing guardrails (confirm-before-push, no micro-commits, verify locally,
-  **full regression after any fix**, **complete work across all surfaces**, secrets out of the repo).
+  **full regression after any fix** (batched + risk-proportional), **complete work across all
+  surfaces**, **token-frugal verification** (structural checks before screenshots), **scoring/audit
+  tools optional & reporting-only**, **model is the user's choice**, secrets out of the repo).
 - **Command `/devkit-init`** — scaffolds a project: pick a **tooling preset**, an optional
   **code-reviewer agent**, and optional **publish-ready** marketplace files; writes
   `devkit.config.json` (the resolved four gates) and drops the QA config templates.
