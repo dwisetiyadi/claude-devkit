@@ -167,7 +167,8 @@ Suggested `devkit.config.json` shape:
   supersedes it** (re-capture a surface only when its source changed: component / content-per-locale
   / style / data / build). **Persist captures to disk** (the record; the user can audit them);
   **re-capture in production only on the user's request**. One composite full-page shot beats many;
-  offload big diffs / audit output to a subagent that returns just the conclusion.
+  offload big diffs / audit output to a subagent that returns just the conclusion. Don't re-read a
+  file you just wrote — the tool layer tracks file state and an edit fails loudly on mismatch.
 - **Scoring/audit tools are optional & reporting-only** — Lighthouse, accessibility / SEO / design
   audits, anything that emits a SCORE or grade, is NOT a gate and carries no obligation. Don't run
   it by default; **ask or just inform the user** so they run it occasionally. (Lighthouse, if the
@@ -193,3 +194,7 @@ documented here rather than auto-installed.)
 If the platform supports per-project memory, record durable preferences/decisions there (who
 the user is, confirmed workflow choices, non-obvious gotchas) so they survive across sessions.
 This skill carries the *defaults*; project memory carries the *specifics*.
+
+**No duplicates** — when something is already recorded, UPDATE the existing entry rather than
+creating a new one, and have other docs **reference** it instead of copying. Before recording,
+check whether an existing entry already covers it. Avoids drift and wasted tokens.
